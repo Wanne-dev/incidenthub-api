@@ -391,6 +391,27 @@ Ver el documento **[EVIDENCIAS.md](./EVIDENCIAS.md)** para la documentación com
 
 ---
 
+## 📝 Historial de Desarrollo
+
+Este proyecto fue desarrollado siguiendo **GitHub Flow** con ramas feature:
+
+| Rama | Propósito |
+|------|-----------|
+| `main` | Rama principal (producción) |
+| `develop` | Rama de integración |
+| `feature/01-project-setup` | Configuración inicial del proyecto |
+| `feature/02-models-and-dtos` | Modelos y DTOs |
+| `feature/03-data-layer` | Capa de datos con incidentes iniciales |
+| `feature/04-controllers` | Controladores con lógica de negocio |
+| `feature/05-validation-middlewares` | Middlewares de validación |
+| `feature/06-auth-middlewares` | Autenticación y autorización |
+| `feature/07-error-handling` | Manejo centralizado de errores |
+| `feature/08-routes-and-server` | Rutas y servidor |
+| `feature/09-documentation` | Documentación (este README) |
+| `feature/10-testing-evidence` | Evidencias de pruebas |
+
+---
+
 ## 📜 Licencia
 
 ISC © Wanne-dev
