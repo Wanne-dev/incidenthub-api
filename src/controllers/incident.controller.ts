@@ -56,3 +56,32 @@ export const updateIncident = (req: Request, res: Response, next: NextFunction) 
   incidents[index] = { ...incidents[index], ...allowedUpdates };
   res.status(200).json({ ok: true, data: incidents[index] });
 };
+
+/**
+ * PATCH /api/incidents/:id/status
+ * Changes only the status of an incident.
+ * 
+ * Reto 5 - State transition rules:
+ * - Allowed: OPEN → IN_PROGRESS, IN_PROGRESS → RESOLVED, OPEN → RESOLVED
+ * - NOT allowed: RESOLVED → OPEN, RESOLVED → IN_PROGRESS
+ * 
+ * Response: 200 OK | 400 Bad Request | 404 Not Found
+ */
+export const updateStatus = (req: Request, res: Response, next: NextFunction) => {
+  const { status } = req.body;
+  const validStatuses: IncidentStatus[] = ["OPEN", "IN_PROGRESS", "RESOLVED"];
+  if (!validStatuses.includes(status)) {
+    return next(new AppError(400, "Invalid status. Use OPEN, IN_PROGRESS or RESOLVED"));
+  }
+
+  const incident = incidents.find(i => i.id === parseInt(String(req.params.id)));
+  if (!incident) return next(new AppError(404, "Incident not found"));
+
+  // Reto 5: Cannot reopen a resolved incident
+  if (incident.status === "RESOLVED" && (status === "OPEN" || status === "IN_PROGRESS")) {
+    return next(new AppError(400, "Cannot change status from RESOLVED to OPEN or IN_PROGRESS"));
+  }
+
+  incident.status = status;
+  res.status(200).json({ ok: true, data: incident });
+};
