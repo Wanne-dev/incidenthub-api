@@ -1,14 +1,24 @@
 {
   "name": "incidenthub-api",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "API REST for technology incident management with Express and TypeScript",
+  "main": "dist/server.js",
   "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "api",
+    "rest",
+    "express",
+    "typescript",
+    "incidents",
+    "crud"
+  ],
+  "author": "Wanne-dev",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "express": "^5.2.1"
   },
