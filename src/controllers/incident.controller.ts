@@ -85,3 +85,16 @@ export const updateStatus = (req: Request, res: Response, next: NextFunction) =>
   incident.status = status;
   res.status(200).json({ ok: true, data: incident });
 };
+
+/**
+ * DELETE /api/incidents/:id
+ * Removes an incident from the array.
+ * Protected by requireAdmin middleware (instructor-token only).
+ * Response: 204 No Content | 404 Not Found
+ */
+export const deleteIncident = (req: Request, res: Response, next: NextFunction) => {
+  const index = incidents.findIndex(i => i.id === parseInt(String(req.params.id)));
+  if (index === -1) return next(new AppError(404, "Incident not found"));
+  incidents.splice(index, 1);
+  res.status(204).send();
+};
