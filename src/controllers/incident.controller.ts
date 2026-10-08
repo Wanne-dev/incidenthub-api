@@ -41,3 +41,18 @@ export const createIncident = (req: Request, res: Response) => {
   incidents.push(newIncident);
   res.status(201).json({ ok: true, data: newIncident });
 };
+
+/**
+ * PUT /api/incidents/:id
+ * Updates an existing incident. Protected fields (id, status, createdAt)
+ * cannot be modified through this endpoint.
+ * Response: 200 OK | 404 Not Found
+ */
+export const updateIncident = (req: Request, res: Response, next: NextFunction) => {
+  const index = incidents.findIndex(i => i.id === parseInt(String(req.params.id)));
+  if (index === -1) return next(new AppError(404, "Incident not found"));
+  // Destructure to exclude protected fields from update
+  const { id, status, createdAt, ...allowedUpdates } = req.body;
+  incidents[index] = { ...incidents[index], ...allowedUpdates };
+  res.status(200).json({ ok: true, data: incidents[index] });
+};
