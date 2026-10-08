@@ -23,3 +23,21 @@ export const getIncidentById = (req: Request, res: Response, next: NextFunction)
   if (!incident) return next(new AppError(404, "Incident not found"));
   res.status(200).json({ ok: true, data: incident });
 };
+
+/**
+ * POST /api/incidents
+ * Creates a new incident from CreateIncidentDto.
+ * Server auto-generates: id (auto-increment), status (OPEN), createdAt (now).
+ * Response: 201 Created
+ */
+export const createIncident = (req: Request, res: Response) => {
+  const dto: CreateIncidentDto = req.body;
+  const newIncident: Incident = {
+    ...dto,
+    id: incidents.length > 0 ? Math.max(...incidents.map(i => i.id)) + 1 : 1,
+    status: "OPEN",
+    createdAt: new Date().toISOString()
+  };
+  incidents.push(newIncident);
+  res.status(201).json({ ok: true, data: newIncident });
+};
