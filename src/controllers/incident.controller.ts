@@ -98,3 +98,42 @@ export const deleteIncident = (req: Request, res: Response, next: NextFunction) 
   incidents.splice(index, 1);
   res.status(204).send();
 };
+
+/**
+ * GET /api/incidents/critical
+ * Reto 1 - Returns only incidents with CRITICAL priority.
+ * Response: 200 OK
+ */
+export const getCritical = (req: Request, res: Response) => {
+  const criticals = incidents.filter(i => i.priority === "CRITICAL");
+  res.status(200).json({ ok: true, total: criticals.length, data: criticals });
+};
+
+/**
+ * GET /api/incidents/pending
+ * Reto 2 - Returns incidents that are OPEN or IN_PROGRESS (not RESOLVED).
+ * Response: 200 OK
+ */
+export const getPending = (req: Request, res: Response) => {
+  const pending = incidents.filter(i => i.status === "OPEN" || i.status === "IN_PROGRESS");
+  res.status(200).json({ ok: true, total: pending.length, data: pending });
+};
+
+/**
+ * GET /api/incidents/stats
+ * Reto 3 - Returns operational summary with dynamically calculated metrics.
+ * Response: 200 OK
+ */
+export const getStats = (req: Request, res: Response) => {
+  const stats = {
+    total: incidents.length,
+    open: incidents.filter(i => i.status === "OPEN").length,
+    inProgress: incidents.filter(i => i.status === "IN_PROGRESS").length,
+    resolved: incidents.filter(i => i.status === "RESOLVED").length,
+    critical: incidents.filter(i => i.priority === "CRITICAL").length,
+    averageEstimatedMinutes: incidents.length
+      ? Math.round(incidents.reduce((acc, curr) => acc + curr.estimatedMinutes, 0) / incidents.length)
+      : 0
+  };
+  res.status(200).json({ ok: true, data: stats });
+};
