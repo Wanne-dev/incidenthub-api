@@ -423,3 +423,16 @@ ISC © Wanne-dev
 **Wanne-dev** - [GitHub](https://github.com/Wanne-dev)
 
 Proyecto desarrollado como parte del **Capítulo V - Proyecto Evaluable** del programa de formación.
+
+### Stack Tecnológico Completo
+- **Runtime:** Node.js 20+
+- **Lenguaje:** TypeScript 5.9 (strict mode)
+- **Framework:** Express 5.2
+- **Desarrollo:** ts-node-dev (hot reload)
+- **Persistencia:** In-memory arrays (v1)
+
+### Métricas del Proyecto
+- **Endpoints:** 9 (6 CRUD + 3 retos)
+- **Middlewares:** 10 (validación, auth, logging, errores)
+- **Pruebas:** 20 casos documentados
+- **Commits:** 30+ commits atómicos en 10 feature branches
